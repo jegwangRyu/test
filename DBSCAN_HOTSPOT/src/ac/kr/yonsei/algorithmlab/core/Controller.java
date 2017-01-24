@@ -16,7 +16,6 @@ public class Controller {
 	public static void main(String[] args) {
 
 		// 파일명 입력
-		// 경로 입력
 		BaseFunction baseFunction = new BaseFunction();
 
 		// 배열 생성
