@@ -3,6 +3,7 @@
  */
 package ac.kr.yonsei.algorithmlab.kernel;
 
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 import ac.kr.yonsei.algorithmlab.cluster.Manager;
@@ -40,12 +41,50 @@ public class BaseFunction {
 	}
 
 	/**
+	 * @Method Name : setLoadData
+	 * @작성일 : 2017. 1. 4.
+	 * @작성자 : iypc
+	 * @변경이력 :
+	 * @Method 설명 : 상태 벡터 리스트를 변형하여 파일로 생성한다.
+	 */
+	public double[][] setLoadData(String fileName) {
+
+		LoadInputFile loadInputFileForVectors = new LoadInputFileForVectors(
+				fileName, Common.baseFilePath);
+		double[][] vectors = (double[][]) loadInputFileForVectors.loadData();
+
+		return vectors;
+
+	}
+
+	/**
+	 * @Method Name : setLoadData
+	 * @작성일 : 2017. 1. 4.
+	 * @작성자 : iypc
+	 * @변경이력 :
+	 * @Method 설명 : 상태 벡터 리스트를 변형하여 파일로 생성한다.
+	 */
+	public ArrayList<double[][]> setLoadFileList(int start, int end) {
+
+		ArrayList<double[][]> temp = new ArrayList<>();
+
+		for (int j = start; j < end; j++) {
+
+			double R1 = j + 1;
+			double R2 = 100;
+			String fileName = R1 + "_" + R2 + ".csv";
+			temp.add(setLoadData(fileName));
+		}
+		return temp;
+	}
+
+	/**
 	 * 
 	 * @param vectors
-	 * 클러스터별 데이터 초기화
+	 *            클러스터별 데이터 초기화
 	 */
 	public void mapping(double[][] vectors) {
-		
+
 		// cluster 개수 카운드
 		TreeSet<Double> tempTree = new TreeSet<>();
 
@@ -67,19 +106,26 @@ public class BaseFunction {
 
 			manager.strList.add(structure);
 		}
-		
+
 		for (int i = 0; i < vectors.length; i++) {
 
 			for (Structure structure : manager.strList) {
 				if (vectors[i][0] == structure.getClusterID()) {
-					
-					/*System.out.println("test value list");
-					System.out.println("ClusterID:"+structure.getClusterID());
-					System.out.println("\t currentMaxX:" + structure.getMaxX());
-					System.out.println("\t currentMinX:" + structure.getMinX());
-					System.out.println("\t currentMaxY:" + structure.getMaxY());
-					System.out.println("\t currentMinY:" + structure.getMinY());*/
-					
+
+					/*
+					 * System.out.println("test value list");
+					 * System.out.println(
+					 * "ClusterID:"+structure.getClusterID());
+					 * System.out.println("\t currentMaxX:" +
+					 * structure.getMaxX());
+					 * System.out.println("\t currentMinX:" +
+					 * structure.getMinX());
+					 * System.out.println("\t currentMaxY:" +
+					 * structure.getMaxY());
+					 * System.out.println("\t currentMinY:" +
+					 * structure.getMinY());
+					 */
+
 					Node node = new Node();
 					node.setX((int) vectors[i][1]);
 					node.setY((int) vectors[i][2]);
@@ -94,47 +140,51 @@ public class BaseFunction {
 
 					structure.setMaxX(MaxValue(inputX, currentMaxX));
 					structure.setMaxY(MaxValue(inputY, currentMaxY));
-					
-					if(structure.nodeXYList.size()<=0)
-					{
+
+					if (structure.nodeXYList.size() <= 0) {
 						structure.setMinX(MaxValue(inputX, currentMinX));
 						structure.setMinY(MaxValue(inputY, currentMinY));
-					}else
-					{
+					} else {
 						structure.setMinX(MinValue(inputX, currentMinX));
 						structure.setMinY(MinValue(inputY, currentMinY));
 					}
-					
-					/*System.out.println("test value list");
-					System.out.println("ClusterID:"+structure.getClusterID());
-					System.out.println("\t currentMaxX:" + currentMaxX);
-					System.out.println("\t currentMinX:" + currentMinX);
-					System.out.println("\t currentMaxY:" + currentMaxY);
-					System.out.println("\t currentMinY:" + currentMaxY);
-					System.out.println("\t inputX:" + inputX);
-					System.out.println("\t inputY:" + inputY);
-					
-					System.out.print("Cluster ID:" + structure.getClusterID());
-					System.out.print("\t MaxX:" + structure.getMaxX());
-					System.out.print("\t MinX:" + structure.getMinX());
-					System.out.print("\t MaxY:" + structure.getMaxY());
-					System.out.print("\t MinY:" + structure.getMinY() + "\n");
-					*/
+
+					/*
+					 * System.out.println("test value list");
+					 * System.out.println(
+					 * "ClusterID:"+structure.getClusterID());
+					 * System.out.println("\t currentMaxX:" + currentMaxX);
+					 * System.out.println("\t currentMinX:" + currentMinX);
+					 * System.out.println("\t currentMaxY:" + currentMaxY);
+					 * System.out.println("\t currentMinY:" + currentMaxY);
+					 * System.out.println("\t inputX:" + inputX);
+					 * System.out.println("\t inputY:" + inputY);
+					 * 
+					 * System.out.print("Cluster ID:" +
+					 * structure.getClusterID()); System.out.print("\t MaxX:" +
+					 * structure.getMaxX()); System.out.print("\t MinX:" +
+					 * structure.getMinX()); System.out.print("\t MaxY:" +
+					 * structure.getMaxY()); System.out.print("\t MinY:" +
+					 * structure.getMinY() + "\n");
+					 */
 					structure.nodeXYList.add(node);
 				}
 			}
-			
-			/*for (Structure temp : manager.strList) {
-				System.out.print("Cluster ID:" + temp.getClusterID());
-				System.out.print("\t MaxX:" + temp.getMaxX());
-				System.out.print("\t MinX:" + temp.getMinX());
-				System.out.print("\t MaxY:" + temp.getMaxY());
-				System.out.print("\t MinY:" + temp.getMinY() + "\n");
-			}*/
+
+			/*
+			 * for (Structure temp : manager.strList) {
+			 * System.out.print("Cluster ID:" + temp.getClusterID());
+			 * System.out.print("\t MaxX:" + temp.getMaxX());
+			 * System.out.print("\t MinX:" + temp.getMinX());
+			 * System.out.print("\t MaxY:" + temp.getMaxY());
+			 * System.out.print("\t MinY:" + temp.getMinY() + "\n"); }
+			 */
 
 		}
 
+		
 		for (Structure temp : manager.strList) {
+			// 출력 포맷 변경 메서스 필요
 			System.out.print("Cluster ID:" + temp.getClusterID());
 			System.out.print("\t MaxX:" + temp.getMaxX());
 			System.out.print("\t MinX:" + temp.getMinX());
