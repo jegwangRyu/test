@@ -1,11 +1,7 @@
-/**
- * 
- */
 package ac.kr.yonsei.algorithmlab.kernel;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
-
 import ac.kr.yonsei.algorithmlab.cluster.Manager;
 import ac.kr.yonsei.algorithmlab.cluster.Node;
 import ac.kr.yonsei.algorithmlab.cluster.Structure;
@@ -31,13 +27,10 @@ public class BaseFunction {
 	 * @Method 설명 : 상태 벡터 리스트를 변형하여 파일로 생성한다.
 	 */
 	public double[][] setLoadData() {
-
 		LoadInputFile loadInputFileForVectors = new LoadInputFileForVectors(
 				Common.labelcsvfileName, Common.baseFilePath);
 		double[][] vectors = (double[][]) loadInputFileForVectors.loadData();
-
 		return vectors;
-
 	}
 
 	/**
