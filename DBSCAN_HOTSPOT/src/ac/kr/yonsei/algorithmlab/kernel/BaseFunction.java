@@ -41,13 +41,10 @@ public class BaseFunction {
 	 * @Method 설명 : 상태 벡터 리스트를 변형하여 파일로 생성한다.
 	 */
 	public double[][] setLoadData(String fileName) {
-
 		LoadInputFile loadInputFileForVectors = new LoadInputFileForVectors(
 				fileName, Common.baseFilePath);
 		double[][] vectors = (double[][]) loadInputFileForVectors.loadData();
-
 		return vectors;
-
 	}
 
 	/**
